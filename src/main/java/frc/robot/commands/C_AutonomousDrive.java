@@ -10,20 +10,30 @@ public class C_AutonomousDrive extends CommandBase {
 
   private SS_Drivebase drivebase = new SS_Drivebase();
 
-  private Vector2 translation;
-  private double rotation;
+  private Vector2 targetTranslation;
+  private double targetRotation;
   private double dt = 0.0;
 
-  private double kP = 0.0;
-  private double kI = 0.0;
-  private double kD = 0.0;
+  private double rotationKP = 0.0;
+  private double rotationKI = 0.0;
+  private double rotationKD = 0.0;
+  private PidConstants rotationPID = new PidConstants(rotationKP, rotationKI, rotationKD);
+  private PidController rotationController = new PidController(rotationPID);
+  private double translationSpeed;
+  private double translationMinSpeed = 0.0;
 
-  private PidConstants pidConstants = new PidConstants(kP, kI, kD);
-  private PidController pidController = new PidController(pidConstants);
+  private double translationKP = 0.0;
+  private double translationKI = 0.0;
+  private double translationKD = 0.0;
+  private PidConstants translationPID = new PidConstants(translationKP, translationKI, translationKD);
+  private PidController translationController = new PidController(translationPID);
+  private double rotationSpeed;
+  private double rotationMinSpeed = 0.0;
 
-  public C_AutonomousDrive(Vector2 translation, double rotation) {
-    this.translation = translation;
-    this.rotation = rotation;
+
+  public C_AutonomousDrive(Vector2 targetTranslation, double targetRotation) {
+    this.targetTranslation = targetTranslation;
+    this.targetRotation = targetRotation;
 
     addRequirements(drivebase);
   }
@@ -35,10 +45,13 @@ public class C_AutonomousDrive extends CommandBase {
 
   @Override
   public void execute() {
-    Vector2 currentTranslation = drivebase.getPose().translation;
-    double kTranslation = pidController.calculate();
+    double currentTranslation = drivebase.getPose().translation.length;
+    translationSpeed = translationController.calculate(currentTranslation, dt);
+    Vector2 translation = targetTranslation.normal().scale(translationSpeed);
 
-    drivebase.drive(translation, rotation, true);
+    rotationSpeed = rotationController.calculate(targetRotation, dt);
+
+    drivebase.drive(translation, rotationSpeed, true);
   }
 
   @Override
@@ -48,6 +61,6 @@ public class C_AutonomousDrive extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return ((translationSpeed < translationMinSpeed) && (rotationSpeed < rotationMinSpeed));
   }
 }
