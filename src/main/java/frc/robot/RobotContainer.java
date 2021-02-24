@@ -7,7 +7,6 @@ package frc.robot;
 import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.robot.input.XboxController;
-import frc.robot.commands.C_AutonomousDrive;
 import frc.robot.commands.C_Drive;
 import frc.robot.subsystems.SS_Drivebase;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,7 +19,7 @@ public class RobotContainer {
   double autoDriveTargetRotation;
 
   public final SS_Drivebase drivebase = new SS_Drivebase();
-  public final C_AutonomousDrive drive = new C_AutonomousDrive(autoDriveTargetTranslation, autoDriveTargetRotation);
+  public final C_Drive drive = new C_Drive();
   
   private static final XboxController controller = new XboxController(Constants.XBOXCONTROLLER_ID);
 

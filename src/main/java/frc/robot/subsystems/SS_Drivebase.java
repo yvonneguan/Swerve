@@ -28,6 +28,15 @@ import frc.robot.drive.NavX;
 
 public class SS_Drivebase extends SubsystemBase implements UpdateManager.Updatable{
 
+    public static SS_Drivebase instance;
+
+    public static SS_Drivebase getInstance() {
+        if (instance == null) {
+            instance = new SS_Drivebase();
+        }
+        return instance;
+    }
+
   public static final double FRONT_LEFT_MODULE_OFFSET = Math.toRadians(0);
   public static final double FRONT_RIGHT_MODULE_OFFSET = Math.toRadians(0);
   public static final double BACK_LEFT_MODULE_OFFSET = Math.toRadians(0);
@@ -86,6 +95,7 @@ public class SS_Drivebase extends SubsystemBase implements UpdateManager.Updatab
 
   public SS_Drivebase() {
 
+    /*
     ShuffleboardTab drivebaseTab = Shuffleboard.getTab("Drivebase");
     poseXEntry = drivebaseTab.add("Pose X", 0.0).withPosition(0, 0).withSize(1, 1).getEntry();
     poseYEntry = drivebaseTab.add("Pose Y", 0.0).withPosition(0, 1).withSize(1, 1).getEntry();
@@ -126,6 +136,7 @@ public class SS_Drivebase extends SubsystemBase implements UpdateManager.Updatab
 
     ShuffleboardLayout correctionContainer = drivebaseTab.getLayout("Correction", BuiltInLayouts.kList).withPosition(1, 2).withSize(1, 1);
     correctionAngleEntry = correctionContainer.add("Correction", 0.0).getEntry();
+    */
   }
 
   public RigidTransform2 getPose() {

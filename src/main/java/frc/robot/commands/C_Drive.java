@@ -10,7 +10,7 @@ import frc.robot.subsystems.SS_Drivebase;
 
 public class C_Drive extends CommandBase {
 
-  private SS_Drivebase drivebase = new SS_Drivebase();
+  private SS_Drivebase drivebase = SS_Drivebase.getInstance();
   private XboxController controller = RobotContainer.getController();
 
   public C_Drive() {
