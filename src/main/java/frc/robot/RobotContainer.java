@@ -18,8 +18,7 @@ public class RobotContainer {
   Vector2 autoDriveTargetTranslation;
   double autoDriveTargetRotation;
 
-  public final SS_Drivebase drivebase = new SS_Drivebase();
-  public final C_Drive drive = new C_Drive();
+  public final SS_Drivebase drivebase = SS_Drivebase.getInstance();
   
   private static final XboxController controller = new XboxController(Constants.XBOXCONTROLLER_ID);
 
@@ -32,9 +31,11 @@ public class RobotContainer {
     controller.getBackButton().whenPressed(new InstantCommand(() -> drivebase.resetGyroAngle(Rotation2.ZERO), drivebase));
   }
 
+  /*
   public Command getAutonomousCommand() {
     return drive;
   }
+  */
 
   public static XboxController getController() {
     return controller;
